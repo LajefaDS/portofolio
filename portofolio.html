@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">Me...</div>
+    <nav class="nav" id="nav-menu">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle">☰</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Crafting clear interfaces and thoughtful brands.</h1>
+      <p>I’m a product designer & front-end developer who turns complex problems into simple, engaging experiences.</p>
+      <div class="buttons">
+        <a href="#contact" class="btn primary">Work with me</a>
+        <a href="#projects" class="btn">See projects</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/25319f4422a631051b13a43259c308c88445e5f6a50bf49c46f2fc0cf72751a2.jpg" alt="Portfolio Hero">
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>Selected Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?q=80&w=1200&auto=format&fit=crop" alt="Project 1">
+        <h3>Visual Identity for Solis</h3>
+        <p>Branding, logo system, and art direction for a solar-tech startup.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop" alt="Project 2">
+        <h3>Dashboard — Data Viz</h3>
+        <p>Interactive dashboard prototype showing KPI flows and insights.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.squarespace-cdn.com/content/v1/594b1bc1579fb376887ee61d/1611048449977-XSQLZWOWMW62NCWTT4DG/dscf4620_48613550632_o.jpg" alt="Project 3">
+        <h3>Photography — Urban Geometry</h3>
+        <p>A series of architectural photographs focused on form and light.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>I blend visual design with front-end engineering to build polished products. I care about accessibility, performance, and clear communication.</p>
+    <ul>
+      <li><strong>Location:</strong> Jakarta, Indonesia</li>
+      <li><strong>Experience:</strong> 17+ years</li>
+      <li><strong>Focus:</strong> Design Systems • Front-end</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="contact">
+  <h2>Let’s Work Together</h2>
+  <form id="contact-form">
+    <input type="text" id="name" placeholder="Your name" required>
+    <input type="email" id="email" placeholder="Your email" required>
+    <input type="text" id="live" placeholder="Yout Live">
+    <textarea id="tentang" rows="4" placeholder="About You"></textarea>
+    <button type="submit">Send via WhatsApp</button>
+  </form>
+</section>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Lajefa — Built My Project</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const live = document.getElementById("live").value;
+    const tentang = document.getElementById("tentang").value;
+
+    const whatsappMessage = 
+    `Halo, saya ${name}` +
+    ` Email Saya ${email}` +
+    ` Saya tinggal di ${live}` + 
+    ` Tentang Saya: ${tentang}` +
+    ` Saya ingin melamar ke perusahaan anda.`;
+    
+    const phone = "6285724105195"; // ubah 0 jadi 62
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage)}`;
+    
+    window.open(url, "_blank");
+  });
+  </script>
+</body>
+</html>

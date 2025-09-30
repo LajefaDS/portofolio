@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Virus Simulation</title>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      padding: 20px;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #screen {
+      white-space: pre-wrap;
+    }
+
+    #startBtn {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: red;
+      font-size: 24px;
+      font-family: 'Courier New', Courier, monospace;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <button id="startBtn">🔒 Click to Start Virus Simulation</button>
+  <div id="screen" style="display: none;">Initializing virus engine...</div>
+
+  <script>
+    const lines = [
+      "[virussss] Injecting payload...",
+      "[virussss] Encrypting system files...",
+      "[virussss] Uploading data to remote server...",
+      "[virussss] Disabling antivirus...",
+      "[virussss] Launching final stage...",
+      "[virussss] System lockdown initiated.",
+      "⚠️  Your computer is infected!",
+      "To unlock your system, send 1 BTC to: FAKEBTCADDRESS123",
+      "anda kena hack, anda terkena virus dari kami 😎"
+    ];
+
+    let index = 0;
+
+    function printNextLine() {
+      if (index < lines.length) {
+        document.getElementById("screen").innerText += "\n" + lines[index];
+        index++;
+        setTimeout(printNextLine, 1500);
+      }
+    }
+
+    document.getElementById("startBtn").addEventListener("click", async function () {
+      const screen = document.documentElement;
+
+      try {
+        if (screen.requestFullscreen) {
+          await screen.requestFullscreen();
+        } else if (screen.webkitRequestFullscreen) {
+          await screen.webkitRequestFullscreen();
+        } else if (screen.msRequestFullscreen) {
+          await screen.msRequestFullscreen();
+        }
+      } catch (err) {
+        console.error("Fullscreen request failed", err);
+      }
+
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("screen").style.display = "block";
+      setTimeout(printNextLine, 1000);
+    });
+
+    // ❌ Blok beberapa shortcut browser
+    document.addEventListener('keydown', function (e) {
+      if (
+        e.key === "F5" ||                           // F5
+        (e.ctrlKey && e.key.toLowerCase() === "r") || // Ctrl+R
+        (e.ctrlKey && e.key.toLowerCase() === "t") || // Ctrl+T
+        (e.ctrlKey && e.key.toLowerCase() === "n") || // Ctrl+N
+        (e.ctrlKey && e.key.toLowerCase() === "w")    // Ctrl+W
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+
+    // ❌ Blok klik kanan
+    window.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+
+    // ❌ Blok drag
+    window.addEventListener("dragstart", function (e) {
+      e.preventDefault();
+    });
+
+    // ❌ Blok select teks
+    window.addEventListener("selectstart", function (e) {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>

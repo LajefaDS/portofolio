@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Warning: Intruder Alert!</title>
+<style>
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: url(https://www.wowrack.com/wp-content/uploads/2024/01/wordpress-hacker-blog.jpg) no-repeat center center fixed; 
+    background-size: cover; /* Ensures the background image covers the entire screen */
+    color: #ff0000;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+
+  .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    user-select: none;
+    text-align: center;
+  }
+
+  .skull-icon {
+    font-family: 'Material Icons';
+    font-size: 96px;
+    color: #ff0000;
+    text-shadow: 0 0 12px #ff0000;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 3rem;
+    text-shadow: 0 0 20px #ff0000;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.5rem;
+    max-width: 320px;
+    text-shadow: 0 0 12px #ff0000;
+  }
+
+  button {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #ff0000;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 12px #ff0000;
+    transition: background-color 0.3s ease;
+  }
+  button:hover, button:focus {
+    background: #990000;
+    outline: none;
+  }
+
+  #message {
+    font-size: 1.2rem;
+    color: #ff8080;
+    min-height: 1.2em;
+    user-select: none;
+    margin-top: 16px;
+  }
+
+  #formContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  input[type="password"] {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    padding: 12px 16px;
+    border: 2px solid #ff0000;
+    border-radius: 8px;
+    background: transparent;
+    color: #ff0000;
+    width: 320px;
+    outline-offset: 2px;
+    box-shadow: 0 0 12px #ff0000;
+    transition: border-color 0.3s ease;
+  }
+  input[type="password"]:focus {
+    border-color: #990000;
+    box-shadow: 0 0 16px #990000;
+  }
+</style>
+</head>
+<body class="no-scroll">
+
+<div class="container" role="main" aria-labelledby="title" aria-describedby="desc">
+  <span class="skull-icon" aria-hidden="true">skull</span>
+  <h1 id="title">PERINGATAN: INTRUDER!</h1>
+  <p id="desc">Sistem Anda telah disusupi! Klik tombol di bawah untuk melanjutkan.</p>
+  
+  <button id="startBtn" aria-live="polite">Mulai</button>
+
+  <div id="formContainer" aria-label="Form unlock system">
+    <p>Masukkan kata sandi untuk menyelamatkan sistem Anda.</p>
+    <input type="password" id="passwordInput" aria-label="Password input" autocomplete="off" />
+    <button id="submitBtn" aria-live="polite">Kirim</button>
+    <div id="message" aria-live="assertive" role="alert"></div>
+  </div>
+</div>
+
+<script>
+  const CORRECT_PASSWORD = "scorpion123";
+  const messageEl = document.getElementById("message");
+  const input = document.getElementById("passwordInput");
+  const submitBtn = document.getElementById("submitBtn");
+  const formContainer = document.getElementById("formContainer");
+  const startBtn = document.getElementById("startBtn");
+  const containerDesc = document.getElementById("desc");
+
+  // Blok beberapa shortcut kunci dan event
+  const blockedKeys = new Set([
+    "F11", "F5", "ContextMenu", "Tab"
+  ]);
+  document.addEventListener("keydown", e => {
+    if (
+      blockedKeys.has(e.key) ||
+      (e.ctrlKey && ["r", "R", "t", "T", "n", "N", "w", "W"].includes(e.key)) ||
+      (e.altKey && ["F4"].includes(e.key))
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, { capture: true });
+
+  // Blok klik kanan
+  window.addEventListener("contextmenu", e => e.preventDefault());
+
+  startBtn.addEventListener("click", async () => {
+    // Minta fullscreen (karena klik tombol)
+    try {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) await elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) await elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) await elem.msRequestFullscreen();
+    } catch (e) {
+      console.warn("Fullscreen gagal: ", e);
+    }
+
+    // Sembunyikan tombol start, tampilkan form
+    startBtn.style.display = "none";
+    containerDesc.textContent = "Masukkan kata sandi untuk membuka kunci sistem Anda.";
+    formContainer.style.display = "flex";
+
+    input.focus();
+  });
+
+  submitBtn.addEventListener("click", () => {
+    const val = input.value.trim();
+    if (val === "") {
+      messageEl.style.color = "#ff4c4c";
+      messageEl.textContent = "Kata sandi nya kosong! Coba lagi!";
+      return;
+    }
+    if (val === CORRECT_PASSWORD) {
+      messageEl.style.color = "#00ff00";
+      messageEl.textContent = "Kata sandi benar! Sistem dibuka.";
+      // Lepas fullscreen dan ijinkan interaksi dengan aman setelah delay
+      setTimeout(() => {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+        document.body.classList.remove("no-scroll");
+        // Sembunyikan input dan tombol setelah berhasil
+        input.style.display = "none";
+        submitBtn.style.display = "none";
+        messageEl.textContent = "";
+        // Tutup jendela (hanya jika browser izinkan)
+        window.close();
+      }, 1500);
+    } else {
+      messageEl.style.color = "#ff4c4c";
+      messageEl.textContent = "Kata sandi salah! Coba lagi.";
+      input.value = "";
+      input.focus();
+    }
+  });
+
+  // Prevent selection and drag
+  ["selectstart", "dragstart", "copy", "cut", "paste"].forEach(evt =>
+    window.addEventListener(evt, e => e.preventDefault())
+  );
+</script>
+
+</body>
+</html>
