@@ -91,14 +91,15 @@
     `Halo, saya ${name}` +
     ` Email Saya ${email}` +
     ` Saya tinggal di ${live}` + 
-    ` Tentang Saya: ${tentang}` +
-    ` Saya ingin melamar ke perusahaan anda.`;
+    ` Tentang Saya: ${tentang}.` +
+    ` SAYA INGIN MELAMAR KE PERUSAHAAN ANDA.`;
     
     const phone = "6285724105195"; // ubah 0 jadi 62
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage)}`;
     
     window.open(url, "_blank");
   });
+    const navToggle = document.getElementById("nav-toggle"); const navMenu = document.getElementById("nav-menu"); navToggle.addEventListener("click", () => { navMenu.classList.toggle("nav-open"); });
   </script>
 </body>
 </html>
